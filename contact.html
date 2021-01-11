@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/main.css" />
+	</head>
+
+	<body>
+		<div id="top"></div>
+		<!--main-->
+
+		<div class="abpg container">
+			<div class="">
+				<!--<div class="col-md-3">
+					<div class="model-title theme">
+						关于我们
+					</div>
+					<div class="model-list">
+						<ul class="list-group">
+							<li class="list-group-item ">
+								<a href="about.html">关于XXX</a>
+							</li>
+						</ul>
+					</div>
+				</div>-->
+				<div class="col-md-12 serli">
+					<ol class="breadcrumb">
+						<li><i class="glyphicon glyphicon-home"></i>
+							<a href="index.html">主页</a>
+						</li>
+						<li class="active">联系我们</li>
+					</ol>
+					<div class="map">
+						<iframe src="static/map/map.html" title="地图"></iframe>
+					</div>
+					<div class="row mes">
+						<div class="address col-sm-6 col-xs-12">
+							<ul>
+								<li>公司地址：河南省濮阳市范县杨集吴马厂</li>
+								<li>固定电话：0393-5856131</li>
+								<li>移动电话：18439337122</li>
+								<li>联系邮箱：1490369541@qq.com</li>
+							</ul>
+							<img src="static/images/c.jpg"/>
+						</div>
+						<div class="letter col-sm-6 col-xs-12">
+							<form id="message">
+								<input type="text" placeholder="姓名"/>
+								<input type="text" placeholder="联系电话"/>
+								<textarea rows="6" placeholder="消息"></textarea>
+							</form>
+							<a class="btn btn-primary">发送</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer"></div>
+		<script src="static/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/main.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+<script>
+	$('#top').load('./top-common.html');
+	$('#footer').load('./footer-common.html');
+</script>
+</html>
