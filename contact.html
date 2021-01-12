@@ -7,6 +7,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="static/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/toastr.min.css" />
+		<style>
+			.toast-center-center {
+			   top: 50%;
+			   left: 50%;
+			   margin-top: -30px;
+			   margin-left: -150px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -48,12 +57,12 @@
 							<img src="static/images/c.jpg"/>
 						</div>
 						<div class="letter col-sm-6 col-xs-12">
-							<form id="message">
-								<input type="text" placeholder="姓名"/>
-								<input type="text" placeholder="联系电话"/>
-								<textarea rows="6" placeholder="消息"></textarea>
+							<form>
+								<input type="text" id="name" placeholder="姓名"/>
+								<input type="text" id="phone" placeholder="联系电话"/>
+								<textarea rows="6" id="message" placeholder="消息"></textarea>
 							</form>
-							<a class="btn btn-primary">发送</a>
+							<a href="javascript:void(0)" id="send" onclick="btnSend()" class="btn btn-primary">发送</a>
 						</div>
 					</div>
 				</div>
@@ -63,9 +72,79 @@
 		<script src="static/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="static/js/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/smtp.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/toastr.min.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 <script>
 	$('#top').load('./top-common.html');
 	$('#footer').load('./footer-common.html');
+	toastr.options = {
+ 
+		"closeButton": false, //是否显示关闭按钮
+
+		"debug": false, //是否使用debug模式
+
+		"positionClass": "toast-center-center",//弹出窗的位置
+
+		"showDuration": "300",//显示的动画时间
+
+		"hideDuration": "2000",//消失的动画时间
+
+		"timeOut": "1000", //展现时间
+
+		"extendedTimeOut": "1000",//加长展示时间
+
+		"showEasing": "swing",//显示时的动画缓冲方式
+
+		"hideEasing": "linear",//消失时的动画缓冲方式
+
+		"showMethod": "fadeIn",//显示时的动画方式
+
+		"hideMethod": "fadeOut" //消失时的动画方式
+	};
+	function btnSend() {
+		var name = $("#name").val();
+		var phone = $("#phone").val();
+		var message = $("#message").val();
+
+		if (name.length == 0) {
+			toastr.error('姓名不能为空！');
+			return;
+		}
+		if (phone.length == 0) {
+			toastr.error("联系电话不能为空!");
+			return;
+		}
+
+		var myreg = /^1(?:70\d|(?:9[89]|8[0-24-9]|7[135-8]|66|5[0-35-9])\d|3(?:4[0-8]|[0-35-9]\d))\d{7}$/;
+		if (!myreg.test(phone)) {
+			toastr.error('请输入有效的联系电话');
+			return;
+		}
+
+		if (message.length < 6) {
+			toastr.error("消息不能不能少于6个字符!");
+			return;
+		}
+		$("#send").text("正在发送，请稍等...");
+		$('#send').removeAttr('onclick');
+
+		Email.send({
+			Host : "smtp.qq.com",
+			Username : "791155975@qq.com",
+			Password : "yhlmhvtzbryabejh",
+			To : '1753762512@qq.com',
+			From : "791155975@qq.com",
+			Subject : name + "发来一条消息",
+			Body : message + "，联系电话：" + phone
+		}).then(
+			message => {
+				toastr.success('发送成功！');
+				$("#send").text("发送");
+				$('#send').attr('onclick', 'btnSend()');
+				$("#message").val("");
+			}
+		);
+	}
 </script>
 </html>
